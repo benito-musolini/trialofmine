@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Complex Website</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #6e45e2;
+            --secondary-color: #88d3ce;
+            --dark-color: #121212;
+            --light-color: #f8f9fa;
+            --accent-color: #ff7e5f;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            transition: all 0.5s ease;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            mix-blend-mode: difference;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            z-index: 10;
+        }
+        
+        .particles-js-canvas-el {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://source.unsplash.com/random/1920x1080') center/cover no-repeat;
+            opacity: 0.2;
+            animation: zoomInOut 20s infinite alternate;
+        }
+        
+        @keyframes zoomInOut {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        
+        /* 3D Card Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(10deg) translateY(-10px);
+        }
+        
+        /* Parallax Section */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 60vh;
+            position: relative;
+        }
+        
+        /* Animated SVG */
+        .animated-svg path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear forwards;
+        }
+        
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        
+        .glitch::before {
+            color: #0ff;
+            z-index: -1;
+            animation: glitch-effect 3s infinite;
+        }
+        
+        .glitch::after {
+            color: #f0f;
+            z-index: -2;
+            animation: glitch-effect 2s infinite reverse;
+        }
+        
+        @keyframes glitch-effect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .parallax {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+    <!-- THREE.js 3D Background -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+<!-- AI Chatbot Container -->
+<div id="chatbot" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 9999;">
+  <div class="card shadow-lg" style="width: 350px; display: none;">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <span>AI Assistant</span>
+      <button id="closeChat" class="btn btn-sm btn-light">&times;</button>
+    </div>
+    <div id="chatMessages" class="card-body" style="height: 300px; overflow-y: auto;"></div>
+    <div class="card-footer">
+      <input id="userInput" type="text" class="form-control" placeholder="Ask me anything...">
+    </div>
+  </div>
+  <button id="chatToggle" class="btn btn-primary rounded-circle p-3 shadow">
+    <i class="fas fa-robot fa-2x"></i>
+  </button>
+</div>
+
+<!-- Game Engine Canvas -->
+<div id="gameContainer" class="position-fixed top-0 start-0 w-100 h-100" style="z-index: 9998; pointer-events: none; display: none;">
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <button id="closeGame" class="btn btn-danger position-absolute top-0 end-0 m-3">X</button>
+</div>
+
+<!-- Audio Visualizer -->
+<canvas id="visualizer" class="position-fixed bottom-0 start-0 w-100" height="100" style="z-index: 9997;"></canvas>
+
+<script>
+  // ======================
+  // 1. THREE.js 3D UNIVERSE
+  // ======================
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.prepend(renderer.domElement);
+  
+  // Create twisting geometry
+  const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+  const material = new THREE.MeshPhongMaterial({ 
+    color: 0x6e45e2,
+    emissive: 0x00ffff,
+    specular: 0xffffff,
+    shininess: 100,
+    wireframe: true 
+  });
+  const knot = new THREE.Mesh(geometry, material);
+  scene.add(knot);
+  
+  // Add lights
+  const light1 = new THREE.PointLight(0xff00ff, 1, 100);
+  light1.position.set(10, 10, 10);
+  scene.add(light1);
+  
+  const light2 = new THREE.PointLight(0x00ffff, 1, 100);
+  light2.position.set(-10, -10, -10);
+  scene.add(light2);
+  
+  camera.position.z = 30;
+  
+  // Mouse move effects
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 2 - 1;
+    const y = -(e.clientY / window.innerHeight) * 2 + 1;
+    knot.rotation.x = y * 0.5;
+    knot.rotation.y = x * 0.5;
+    light1.position.x = x * 50;
+    light1.position.y = y * 50;
+  });
+  
+  function animate() {
+    requestAnimationFrame(animate);
+    knot.rotation.z += 0.005;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Hero text animation
+  gsap.from(".hero-content h1", {
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "+=500",
+      scrub: true
+    },
+    y: 100,
+    opacity: 0,
+    duration: 2
+  });
+
+  gsap.to(".parallax", {
+    scrollTrigger: {
+      trigger: ".parallax",
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true
+    },
+    y: 100,
+    ease: "none"
+  });
+
+  document.querySelectorAll(".card-3d").forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 80%",
+        toggleActions: "play none none none"
+      },
+      y: 50,
+      rotationX: -20,
+      opacity: 0,
+      duration: 1,
+      delay: i * 0.2
+    });
+  });
+
+
+  const chatbot = document.getElementById("chatbot");
+  const chatToggle = document.getElementById("chatToggle");
+  const chatBox = document.querySelector("#chatbot .card");
+  const chatMessages = document.getElementById("chatMessages");
+  const userInput = document.getElementById("userInput");
+  
+  const responses = [
+    "I'm an AI here to help!",
+    "This website uses TensorFlow.js for real-time processing.",
+    "Try clicking the game button in the navigation!",
+    "The 3D background is rendered with Three.js WebGL.",
+    "GSAP handles all these smooth animations."
+  ];
+  
+  chatToggle.addEventListener("click", () => {
+    chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+  });
+  
+  document.getElementById("closeChat").addEventListener("click", () => {
+    chatBox.style.display = "none";
+  });
+  
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && userInput.value) {
+      addMessage(userInput.value, "user");
+      setTimeout(() => {
+        addMessage(responses[Math.floor(Math.random() * responses.length)], "bot");
+      }, 1000);
+      userInput.value = "";
+    }
+  });
+  
+  function addMessage(text, sender) {
+    const message = document.createElement("div");
+    message.className = `mb-2 p-2 rounded ${sender === "user" ? "bg-primary text-white ms-5" : "bg-light text-dark me-5"}`;
+    
+    if (sender === "bot") {
+      message.innerHTML = `<span class="typing"></span>`;
+      setTimeout(() => {
+        message.innerHTML = text;
+      }, 500);
+    } else {
+      message.textContent = text;
+    }
+    
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // ======================
+  // 4. GAME ENGINE
+  // ======================
+  const gameCanvas = document.getElementById('gameCanvas');
+const ctx = gameCanvas.getContext('2d');
+const gameModal = new bootstrap.Modal(document.getElementById('gameModal'));
+const gameScore = document.getElementById('gameScore');
+
+// Game state
+const game = {
+  player: { x: 375, y: 550, width: 50, height: 20, speed: 8 },
+  bullets: [],
+  enemies: [],
+  score: 0,
+  isRunning: false
+};
+
+// Initialize game
+function initGame() {
+  gameModal.show();
+  game.isRunning = true;
+  game.score = 0;
+  game.enemies = [];
+  game.bullets = [];
+  gameScore.textContent = `Score: ${game.score}`;
+  
+  // Create initial enemies
+  for (let i = 0; i < 5; i++) {
+    spawnEnemy();
+  }
+  
+  // Start game loop
+  gameLoop();
+}
+
+function spawnEnemy() {
+  game.enemies.push({
+    x: Math.random() * 750,
+    y: Math.random() * -200 - 50,
+    width: 40,
+    height: 40,
+    speed: Math.random() * 2 + 1
+  });
+}
+
+// Game loop
+function gameLoop() {
+  if (!game.isRunning) return;
+  
+  // Clear canvas
+  ctx.clearRect(0, 0, 800, 600);
+  
+  // Draw player
+  ctx.fillStyle = "#6e45e2";
+  ctx.fillRect(game.player.x, game.player.y, game.player.width, game.player.height);
+  
+  // Draw bullets
+  ctx.fillStyle = "#ff7e5f";
+  game.bullets.forEach(bullet => {
+    bullet.y -= 10;
+    ctx.fillRect(bullet.x, bullet.y, 5, 15);
+  });
+  
+  // Draw enemies
+  ctx.fillStyle = "#88d3ce";
+  game.enemies.forEach(enemy => {
+    enemy.y += enemy.speed;
+    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+  });
+  
+  // Collision detection
+  game.bullets.forEach((bullet, bi) => {
+    game.enemies.forEach((enemy, ei) => {
+      if (
+        bullet.x < enemy.x + enemy.width &&
+        bullet.x + 5 > enemy.x &&
+        bullet.y < enemy.y + enemy.height &&
+        bullet.y + 15 > enemy.y
+      ) {
+        // Create explosion
+        for (let i = 0; i < 20; i++) {
+          ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          ctx.fillRect(
+            enemy.x + Math.random() * enemy.width,
+            enemy.y + Math.random() * enemy.height,
+            Math.random() * 10,
+            Math.random() * 10
+          );
+        }
+        
+        game.bullets.splice(bi, 1);
+        game.enemies.splice(ei, 1);
+        game.score += 100;
+        gameScore.textContent = `Score: ${game.score}`;
+        spawnEnemy();
+      }
+    });
+  });
+  
+  // Game over check
+  game.enemies.forEach(enemy => {
+    if (enemy.y > 600) {
+      game.isRunning = false;
+      ctx.fillStyle = "white";
+      ctx.font = "48px sans-serif";
+      ctx.fillText("GAME OVER", 300, 300);
+      ctx.font = "24px sans-serif";
+      ctx.fillText(`Final Score: ${game.score}`, 330, 350);
+    }
+  });
+  
+  requestAnimationFrame(gameLoop);
+}
+
+// Game controls
+document.addEventListener("keydown", (e) => {
+  if (!game.isRunning) return;
+  
+  if (e.key === "ArrowLeft" && game.player.x > 0) {
+    game.player.x -= game.player.speed;
+  }
+  if (e.key === "ArrowRight" && game.player.x < 750) {
+    game.player.x += game.player.speed;
+  }
+  if (e.key === " ") {
+    game.bullets.push({
+      x: game.player.x + game.player.width / 2 - 2.5,
+      y: game.player.y
+    });
+  }
+});
+
+// Add game button to nav
+const nav = document.querySelector(".navbar-nav");
+const gameBtn = document.createElement("li");
+gameBtn.className = "nav-item";
+gameBtn.innerHTML = '<a class="nav-link" id="startGame" href="#">Play Game</a>';
+nav.appendChild(gameBtn);
+
+document.getElementById("startGame").addEventListener("click", (e) => {
+  e.preventDefault();
+  initGame();
+});
+    document.getElementById("closeGame").addEventListener("click", () => {
+        gameModal.hide();
+        game.isRunning = false;
+    });
+  // ======================
+  // 5. AUDIO VISUALIZER
+  // ======================
+  const visualizer = document.getElementById("visualizer");
+  const vCtx = visualizer.getContext("2d");
+  
+  // Setup audio context
+  let audioContext, analyser, dataArray;
+  
+  document.addEventListener("click", () => {
+    if (audioContext) return;
+    
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    
+    const source = audioContext.createMediaElementSource(
+      new Audio("https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3")
+    );
+    
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    
+    visualize();
+  });
+  
+  function visualize() {
+    requestAnimationFrame(visualize);
+    analyser.getByteFrequencyData(dataArray);
+    
+    vCtx.clearRect(0, 0, visualizer.width, visualizer.height);
+    
+    const barWidth = (visualizer.width / dataArray.length) * 2.5;
+    let x = 0;
+    
+    for (let i = 0; i < dataArray.length; i++) {
+      const barHeight = dataArray[i] / 2;
+      const hue = i * 2;
+      
+      vCtx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      vCtx.fillRect(x, visualizer.height - barHeight, barWidth, barHeight);
+      
+      x += barWidth + 1;
+    }
+  }
+</script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-3" style="background-color: rgba(0,0,0,0.5); backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand glitch" href="#" data-text="MEGA SITE">BENITO TRIAL WEBSITE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-sm btn-outline-light" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero d-flex align-items-center">
+        <div class="animated-bg"></div>
+        <div id="particles-js"></div>
+        <div class="container hero-content text-center">
+            <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInDown">Welcome to the <span class="text-gradient">Most Mind Bogggling</span> Website</h1>
+            <p class="lead mb-5 animate__animated animate__fadeInUp animate__delay-1s">Featuring every modern web technology Benito can imagine</p>
+            <div class="d-flex justify-content-center gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                <button class="btn btn-primary btn-lg px-4 py-2">Get Started</button>
+                <button class="btn btn-outline-light btn-lg px-4 py-2">Learn More</button>
+            </div>
+        </div>
+        <a href="#features" class="scroll-down animate__animated animate__bounce animate__infinite animate__delay-3s">
+            <i class="fas fa-chevron-down fa-2x"></i>
+        </a>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-5 py-lg-7">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-4 fw-bold mb-4">Amazing Features</h2>
+                    <p class="lead">Check out these incredible features that will blow :) your mind</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Feature 1 -->
+                <div class="col-md-4">
+                    <div class="card card-3d h-100 border-0 shadow-lg">
+                        <div class="card-body p-4 text-center">
+                            <div class="icon-box bg-primary bg-gradient mb-4 mx-auto">
+                                <i class="fas fa-rocket fa-2x"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Lightning Fast</h3>
+                            <p class="mb-0">Optimized for performance with lazy loading and modern techniques.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="col-md-4">
+                    <div class="card card-3d h-100 border-0 shadow-lg">
+                        <div class="card-body p-4 text-center">
+                            <div class="icon-box bg-success bg-gradient mb-4 mx-auto">
+                                <i class="fas fa-mobile-alt fa-2x"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Responsive Design</h3>
+                            <p class="mb-0">Looks perfect on any device from phones to 4K displays.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="col-md-4">
+                    <div class="card card-3d h-100 border-0 shadow-lg">
+                        <div class="card-body p-4 text-center">
+                            <div class="icon-box bg-danger bg-gradient mb-4 mx-auto">
+                                <i class="fas fa-cogs fa-2x"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Customizable</h3>
+                            <p class="mb-0">Easily modify colors, layouts and components to suit your needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Parallax Section -->
+    <section class="parallax" style="background-image: url('https://source.unsplash.com/random/1920x1080/?tech');">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="display-4 text-white fw-bold">Immersive Experience</h2>
+                    <p class="lead text-white">Smooth parallax scrolling creates depth and visual interest</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Carousel -->
+    <section id="gallery" class="py-5 py-lg-7 bg-dark">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-4 fw-bold mb-4 text-white">Interactive Gallery</h2>
+                    <p class="lead text-light">Swipe through these stunning images with our enhanced carousel</p>
+                </div>
+            </div>
+            
+            <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="3"></button>
+                </div>
+                <div class="carousel-inner rounded-4 overflow-hidden shadow-lg">
+                    <div class="carousel-item active" data-bs-interval="5000">
+                        <img src="images/megamind-no-bitches-meme-3264x3264-v0-gb5bw6safuu81.webp" class="d-block w-100" alt="Nature" style="height: 600px; object-fit: cover;">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                            <h5>No Bitches!!</h5>
+                            <p>I would have typed lorem ipsum here but oh well</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <img src="images/vuknok.gif" class="d-block w-100" alt="City" style="height: 600px; object-fit: cover;">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                            <h5>You aint him bruuh</h5>
+                            <p>😂😂😂😂😂😂😂😂😂😂😂😂</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <img src="images/1onacgtsfbge1.jpeg" class="d-block w-100" alt="Tech" style="height: 600px; object-fit: cover;">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                            <h5>Larry</h5>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="5000">
+                        <img src="images/NightmareVance.webp" class="d-block w-100" alt="Space" style="height: 600px; object-fit: cover;">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                            <h5>Element Of Surprise</h5>
+                            <p>Why Tho</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5 py-lg-7">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-4 fw-bold mb-4">Money For Me</h2>
+                    <p class="lead">Choose the perfect plan for your needs</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Plan 1 -->
+                <div class="col-md-4">
+                    <div class="card pricing-card h-100 border-0 shadow-lg">
+                        <div class="card-header bg-primary text-white py-4">
+                            <h3 class="h4 text-center mb-0">Starter</h3>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <div class="price display-3 fw-bold mb-3">10 BOB</div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Basic Features</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Email Support</li>
+                                <li class="py-2"><i class="fas fa-times text-danger me-2"></i> Advanced Analytics</li>
+                                <li class="py-2"><i class="fas fa-times text-danger me-2"></i> 24/7 Support</li>
+                            </ul>
+                            <button class="btn btn-outline-primary w-100">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plan 2 (Featured) -->
+                <div class="col-md-4">
+                    <div class="card pricing-card h-100 border-0 shadow-lg featured">
+                        <div class="card-header bg-danger text-white py-4 position-relative">
+                            <h3 class="h4 text-center mb-0">Professional</h3>
+                            <span class="badge bg-white text-danger position-absolute top-0 start-50 translate-middle py-2 px-3">🧢Popular🧢</span>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <div class="price display-3 fw-bold mb-3">20 BOB</div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> All Basic Features</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Priority Support</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Advanced Analytics</li>
+                                <li class="py-2"><i class="fas fa-times text-danger me-2"></i> 24/7 Support</li>
+                            </ul>
+                            <button class="btn btn-danger w-100">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plan 3 -->
+                <div class="col-md-4">
+                    <div class="card pricing-card h-100 border-0 shadow-lg">
+                        <div class="card-header bg-dark text-white py-4">
+                            <h3 class="h4 text-center mb-0">Enterprise</h3>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <div class="price display-3 fw-bold mb-3">50BOB</div>
+                            <ul class="list-unstyled mb-4">
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> All Professional Features</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> 24/7 Support</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Dedicated Account Manager</li>
+                                <li class="py-2"><i class="fas fa-check text-success me-2"></i> Custom Solutions</li>
+                            </ul>
+                            <button class="btn btn-outline-dark w-100">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Animated Stats Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-md-3">
+                    <div class="counter">
+                        <div class="display-3 fw-bold" data-count="1000">-1</div>
+                        <p class="mb-0">Happy Clients</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="counter">
+                        <div class="display-3 fw-bold" data-count="500">15</div>
+                        <p class="mb-0">Projects Completed(check them out at my github)</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="counter">
+                        <div class="display-3 fw-bold" data-count="50">1</div>
+                        <p class="mb-0">Team Members</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="counter">
+                        <div class="display-3 fw-bold" data-count="24">.6</div>
+                        <p class="mb-0">Support Hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Form -->
+    <section id="contact" class="py-5 py-lg-7">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-4 fw-bold mb-4">Get In Touch</h2>
+                    <p class="lead">Have questions? Send me a message and I'll get back to you ASAP(not really)</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm" class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                                <div class="invalid-feedback">
+                                    Please provide your name.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" required>
+                                <div class="invalid-feedback">
+                                    Please provide a subject.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide a message.
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 py-3">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h3 class="h4 mb-4">BENITO SITE</h3>
+                    <p>Linga Guli Wacha lil bro.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-github fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h3 class="h5 mb-4">Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">About</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Services</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Portfolio</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h3 class="h5 mb-4">Services</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50">Web Design</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Development</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Marketing</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">SEO</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h3 class="h5 mb-4">Newsletter</h3>
+                    <p>Subscribe to my newsletter for the latest updates.</p>
+                    <form class="mt-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 Benito Site. All rights reserved.</p>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top btn btn-primary btn-lg rounded-circle shadow">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="videoFrame" src="" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Particle.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorFollower.style.opacity = '1';
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorFollower.style.opacity = '0';
+        });
+        
+        // Hover effects
+        document.querySelectorAll('a, button, .card, [data-cursor-effect]').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.backgroundColor = 'white';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                cursorFollower.style.borderColor = 'white';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = '#ff7e5f';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.borderColor = '#6e45e2';
+            });
+        });
+        
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-bs-theme') === 'dark') {
+                html.setAttribute('data-bs-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                html.setAttribute('data-bs-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // Animated Counters
+        const counters = document.querySelectorAll('.counter [data-count]');
+        const speed = 200;
+        
+        function animateCounters() {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-count');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(animateCounters, 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+        
+        // Initialize counters when scrolled to
+        const counterSection = document.querySelector('.bg-primary');
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                animateCounters();
+            }
+        });
+        
+        observer.observe(counterSection);
+        
+        // Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+        
+        // Back to Top Button
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.opacity = '1';
+                backToTop.style.visibility = 'visible';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.visibility = 'hidden';
+            }
+        });
+        
+        // Form Validation
+        (function () {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+        
+        // Video Modal
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        
+        videoModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const videoSrc = button.getAttribute('data-bs-video');
+            videoFrame.src = videoSrc;
+        });
+        
+        videoModal.addEventListener('hide.bs.modal', function () {
+            videoFrame.src = '';
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animate elements on scroll
+        const animateOnScroll = function () {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Run once on page load
+    </script>
+</body>
+</html>
